@@ -1,7 +1,7 @@
 /**
  *
  * @package    mind.js
- * @version    Release: 1.2.6
+ * @version    Release: 1.2.7
  * @license    GPL3
  * @author     Ali YILMAZ <aliyilmaz.work@gmail.com>
  * @category   Javascript Framework, Basic web development kit.
@@ -31,14 +31,27 @@
 function actionGet(url, callback) {
 
     var xhttp = new XMLHttpRequest();
-
     // Set GET method and ajax file path
     xhttp.open("GET", url, true);
 
     // call on request changes state
     xhttp.onreadystatechange = function() {
+        data = this.responseText;
         if (this.readyState == 4 && this.status == 200) {
-            if(callback) callback(this.responseText);
+            
+            if(is_json(data)){
+                data = JSON.parse(data);
+            }
+
+            if(is_object(data)){
+                var objectResult = [];
+                foreachArray(data, (key, value)=>{
+                    objectResult[key] = value;
+                });
+
+                data = objectResult;
+            }
+            if(callback) callback(data);
         }
     };
 

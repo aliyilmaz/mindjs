@@ -121,9 +121,25 @@ Belirtilen adresin varış noktasındaki sayfanın kaynak kodunu elde ederek, ik
     <body>
         <div id="status"></div>
         <script>
-            actionGet('sample.txt', function(response){
+            // plain text or html
+            actionGet('https://yesno.wtf/', function(response){
+                
                 console.log(response);
-                changeContent('#status', response);
+                
+            });
+
+            // remote json url
+            actionGet('https://yesno.wtf/api', function(response){
+        
+                console.log(response);
+                
+            });
+            
+            // local json url
+            actionGet('../../PhoneBook/api', function(response){
+        
+                console.log(response);
+                
             });
         </script>
     </body>
