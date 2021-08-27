@@ -23,6 +23,10 @@ mind.js, geliştiriciler için tasarlanmış javascript kod çerçevesidir. Proj
 * [listening()](https://github.com/aliyilmaz/mind.js#listening)
 * [generateToken()](https://github.com/aliyilmaz/mind.js#generatetoken)
 * [inverse()](https://github.com/aliyilmaz/mind.js#inverse)
+* [array_flip()](https://github.com/aliyilmaz/mind.js#array_flip)
+* [morsealphabet()](https://github.com/aliyilmaz/mind.js#morsealphabet)
+* [morse_encode()](https://github.com/aliyilmaz/mind.js#morse_encode)
+* [morse_decode()](https://github.com/aliyilmaz/mind.js#morse_decode)
 
 ##### Element
 
@@ -59,6 +63,8 @@ mind.js, geliştiriciler için tasarlanmış javascript kod çerçevesidir. Proj
 * [is_array()](https://github.com/aliyilmaz/mind.js#is_array)
 * [is_json()](https://github.com/aliyilmaz/mind.js#is_json)
 * [is_object()](https://github.com/aliyilmaz/mind.js#is_object)
+* [strstr()](https://github.com/aliyilmaz/mind.js#strstr)
+* [is_morse()](https://github.com/aliyilmaz/mind.js#is_morse)
 * [internet()](https://github.com/aliyilmaz/mind.js#internet)
 
 ---
@@ -360,6 +366,165 @@ Rastgele parametre oluşturmaya yarar. Varsayılan parametre uzunluğu `100` kar
                 };
             appendItem('div#example',JSON.stringify(jsonArray['cars'])+' - '+JSON.stringify(inverse(jsonArray['cars'])));
             appendItem('div#example', '<br><br>');
+
+        </script>
+    </body>
+    </html>
+
+
+---
+
+## array_flip
+
+Bir dizideki anahtar ve değerlerin yerlerini değiştirmeye yarar.
+
+[Demo](https://aliyilmaz.github.io/mindjs/examples/array_flip.html)
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>array_flip</title>
+        <link rel="shortcut icon" href="#">
+        <script src="../src/mind.js"></script>
+    </head>
+    <body>
+        <div id="example">
+
+        </div>
+
+        <script>
+
+            /* -------------------------------------------------------------------------- */
+            /*                                    JSON OBJECT                             */
+            /* -------------------------------------------------------------------------- */
+            let jsonObject = {"firstName":"John", "lastName":"Doe"};
+            appendItem('div#example',JSON.stringify(jsonObject)+' - '+JSON.stringify(array_flip(jsonObject)));
+            appendItem('div#example', '<br><br>');
+
+            /* -------------------------------------------------------------------------- */
+            /*                                    JSON ARRAY                              */
+            /* -------------------------------------------------------------------------- */
+            let jsonArray = {
+                "name":"John",
+                "age":30,
+                "cars":[ "Ford", "BMW", "Fiat" ]
+                };
+            appendItem('div#example',JSON.stringify(jsonArray['cars'])+' - '+JSON.stringify(array_flip(jsonArray['cars'])));
+            appendItem('div#example', '<br><br>');
+
+        </script>
+    </body>
+    </html>
+
+---
+
+## morsealphabet()
+
+Harflerin mors alfabesi karşılığını bir dizi türünde geriye döndürmeye yarar.
+
+[Demo](https://aliyilmaz.github.io/mindjs/examples/morsealphabet.html)
+
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>morsealphabet</title>
+        <link rel="shortcut icon" href="#">
+        <script src="../src/mind.js"></script>
+    </head>
+    <body>
+        <h2>morsealphabet()</h2>
+        <div id="example"></div>
+        <script>
+            appendItem('div#example',JSON.stringify(morsealphabet()));
+            console.log(morsealphabet());
+
+        </script>
+    </body>
+    </html>
+
+
+---
+
+## morse_encode()
+
+Kendisiyle paylaşılan string yapıdaki veriyi [morsealphabet()](https://github.com/aliyilmaz/mind.js#morsealphabet) metodunda tanımlanmış mors kodlarına dönüştürmeye yarar.
+
+[Demo](https://aliyilmaz.github.io/mindjs/examples/morse_encode.html)
+
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>morse_encode</title>
+        <link rel="shortcut icon" href="#">
+        <script src="../src/mind.js"></script>
+    </head>
+    <body>
+        <form>
+            <label for="plain">Plain Text</label><br>
+            <textarea id="plain" cols="30" rows="10">Mustafa Kemal Atatürk</textarea><br><br>
+            <label for="morse">Morse Code</label><br>
+            <textarea id="morse" cols="30" rows="10"></textarea><br>
+        </form>
+
+        <script>
+            changeContent('#morse', morse_encode(getContent('textarea#plain')));
+
+            keyupItem('textarea#plain', function(e){
+                changeContent('#morse', morse_encode(e.value));
+            });
+            keyupItem('textarea#morse', function(e){
+                changeContent('#plain', morse_decode(e.value));
+            });
+
+        </script>
+    </body>
+    </html>
+
+
+---
+
+## morse_decode()
+
+Kendisiyle paylaşılan ve [morsealphabet()](https://github.com/aliyilmaz/mind.js#morsealphabet) metodunda tanımlanmış mors kodlarına dönüştürülmüş parametreyi çözmeye yarar.
+
+[Demo](https://aliyilmaz.github.io/mindjs/examples/morse_decode.html)
+
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>morse_decode</title>
+        <link rel="shortcut icon" href="#">
+        <script src="../src/mind.js"></script>
+    </head>
+    <body>
+
+        <form>
+            <label for="plain">Plain Text</label><br>
+            <textarea id="plain" cols="30" rows="10"></textarea><br><br>
+            <label for="morse">Morse Code</label><br>
+            <textarea id="morse" cols="30" rows="10">-- ..- ... - .- ..-. .- / -.- . -- .- .-.. / .- - .- - ..-- .-. -.-</textarea><br>
+        </form>
+
+        <script>
+            changeContent('#plain', morse_decode(getContent('textarea#morse')));
+
+            keyupItem('textarea#plain', function(e){
+                changeContent('#morse', morse_encode(e.value));
+            });
+            keyupItem('textarea#morse', function(e){
+                changeContent('#plain', morse_decode(e.value));
+            });
 
         </script>
     </body>
@@ -1493,6 +1658,114 @@ Belirtilen verinin nesne türünde olup olmadığını kontrol etmeye yarar.
         </script>
     </body>
     </html>
+
+---
+
+## strstr()
+
+İki `string` parametreden ikincisinin birinci parametrede bulunup bulunmadığını sorgulamaya yarar.
+
+[Demo](https://aliyilmaz.github.io/mindjs/examples/strstr.html)
+
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>strstr</title>
+        <link rel="shortcut icon" href="#">
+        <script src="../src/mind.js"></script>
+    </head>
+    <body>
+
+        <form>
+            <h2>merhaba dünya</h2>
+            <br>
+            <label for="plain">Plain Text</label><br>
+            <textarea id="plain" cols="30" rows="10"></textarea><br><br>
+        </form>
+
+        <script>
+            let data = 'merhaba dünya';
+            keyupItem('textarea#plain', function(e){
+                if(strstr(data, e.value)){
+                    changeContent('#example', 'Found.');
+                } else {
+                    changeContent('#example', 'Not found.');
+                }
+            });
+        </script>
+        <div id="example">
+
+        </div>
+    </body>
+    </html>
+
+
+
+---
+
+## is_morse()
+
+Kendisiyle paylaşılan verinin [morsealphabet()](https://github.com/aliyilmaz/mind.js#morsealphabet) metodunda ki karakterlerle oluşturulmuş bir mors kodu olup olmadığını kontrol etmeye yarar.
+
+[Demo](https://aliyilmaz.github.io/mindjs/examples/is_morse.html)
+
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>is_morse</title>
+        <link rel="shortcut icon" href="#">
+        <script src="../src/mind.js"></script>
+    </head>
+    <body>
+
+        <form>
+            <label for="morse">Morse Code</label><br>
+            <textarea id="morse" cols="30" rows="10">-- ..- ... - .- ..-. .- / -.- . -- .- .-.. / .- - .- - ..-- .-. -.-</textarea><br>
+            <hr>
+            <h2></h2>
+        </form>
+
+        <script>
+            let defaultContent = getContent('textarea#morse');
+            if(is_morse(defaultContent)){
+                changeContent('#plain', morse_decode(defaultContent));
+                changeContent('h2', 'Morse'+' ('+morse_decode(defaultContent)+')');
+
+            } else {
+                changeContent('h2', 'Not Morse');
+            }
+
+            keyupItem('textarea#morse', function(e){
+                if(is_morse(e.value)){
+                    changeContent('#plain', morse_decode(e.value));
+                    changeContent('h2', 'Morse'+' ('+morse_decode(e.value)+')');
+
+                } else {
+                    changeContent('h2', 'Not Morse');
+                }
+            });
+
+        </script>
+
+        <script>
+
+            let data = '-- ..- ... - .- ..-. .- / -.- . -- .- .-.. / .- - .- - ..-- .-. -.-';
+        
+            if(is_morse(data)){
+                console.log('Bu bir mors kodudur.'+' ( '+morse_decode(data)+' )');
+            } else {
+                console.log('Bu bir mors kodu değildir.');
+            }
+        </script>
+    </body>
+    </html>
+
 
 ---
 

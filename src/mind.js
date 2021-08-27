@@ -1,7 +1,7 @@
 /**
  *
  * @package    mind.js
- * @version    Release: 1.2.7
+ * @version    Release: 1.2.8
  * @license    GPL3
  * @author     Ali YILMAZ <aliyilmaz.work@gmail.com>
  * @category   Javascript Framework, Basic web development kit.
@@ -142,6 +142,55 @@ function inverse(data) {
     }
 
     return revrs;
+}
+
+function array_flip( trans ){
+    var key, tmp_ar = {};
+
+    for ( key in trans )
+    {
+        if ( trans.hasOwnProperty( key ) )
+        {
+            tmp_ar[trans[key]] = key;
+        }
+    }
+
+    return tmp_ar;
+}
+
+function morsealphabet() {
+    return {
+        'a': '.-', 'b': '-...', 'c': '-.-.', 'ç': '-.-..', 'd': '-..', 'e': '.', 'f': '..-.', 'g': '--.', 'ğ': '--.-.', 'h': '....', 'ı': '..', 'i': '.-..-', 'j': '.---', 'k': '-.-', 'l': '.-..', 'm': '--', 'n': '-.', 'o': '---', 'ö': '---.', 'p': '.--.', 'q': '--.-', 'r': '.-.', 's': '...', 'ş': '.--..', 't': '-', 'u': '..-', 'ü': '..--', 'v': '...-', 'w': '.--', 'x': '-..-', 'y': '-.--', 'z': '--..', '0': '-----', '1': '.----', '2': '..---', '3': '...--', '4': '....-', '5': '.....', '6': '-....', '7': '--...', '8': '---..', '9': '----.', '.': '.-.-.-', ',': '--..--', '?': '..--..', '\'': '.----.', '!': '-.-.--', '/': '-..-.', '(': '-.--.', ')': '-.--.-', '&': '.-...', ':': '---...', ';': '-.-.-.', '=': '-...-', '+': '.-.-.', '-': '-....-', '_': '..--.-', '"': '.-..-.', '$': '...-..-', '@': '.--.-.', '¿': '..-.-', '¡': '--...-', ' ': '/',
+    };
+}
+
+function morse_encode(str) {
+    str = str.toLowerCase();
+    let morseDictionary = morsealphabet();
+    let output = '';
+    for (let index = 0; index < str.length; index++) {
+        output += morseDictionary[str[index]]+' ';
+    }
+    return output.trim();
+}
+
+function morse_decode(morse) {
+    let output = '';
+
+    if (morse === ' ') {
+        return '#';
+    }
+    let morseDictionary = array_flip(morsealphabet());
+    morse = morse.split(' ');
+
+    for (let index = 0; index < morse.length; index++) {
+        if (isset(morseDictionary[morse[index]])) {
+            output += morseDictionary[morse[index]];
+        } else {
+            output += '#';
+        }
+    }
+    return output;
 }
 
 function getContent(element) {
@@ -555,6 +604,7 @@ function in_array(needle, haystack){
     }
 
 }
+
 function is_function(funcName) {
     return !!(funcName && funcName.call && funcName.apply);
 }
@@ -589,6 +639,30 @@ function is_object(item){
     }
 }
 
+function strstr(haystack, needle, bool) {
+    var pos = 0;
+
+    haystack += "";
+    pos = haystack.indexOf(needle); if (pos == -1) {
+        return false;
+    } else {
+        if (bool) {
+            return haystack.substr(0, pos);
+        } else {
+            return haystack.slice(pos);
+        }
+    }
+}
+
+function is_morse(morse) {
+    let data = morse_decode(morse);
+    if (strstr(data, '#') ) {
+        return false;
+    }
+    return true;
+    
+}
+
 function internet() {
     let status = true;
     
@@ -599,4 +673,3 @@ function internet() {
     }
     return status;
 }
-

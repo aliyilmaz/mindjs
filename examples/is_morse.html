@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>is_morse</title>
+    <link rel="shortcut icon" href="#">
+    <script src="../src/mind.js"></script>
+</head>
+<body>
+
+    <form>
+        <label for="morse">Morse Code</label><br>
+        <textarea id="morse" cols="30" rows="10">-- ..- ... - .- ..-. .- / -.- . -- .- .-.. / .- - .- - ..-- .-. -.-</textarea><br>
+        <hr>
+        <h2></h2>
+    </form>
+
+    <script>
+        let defaultContent = getContent('textarea#morse');
+        if(is_morse(defaultContent)){
+            changeContent('#plain', morse_decode(defaultContent));
+            changeContent('h2', 'Morse'+' ('+morse_decode(defaultContent)+')');
+
+        } else {
+            changeContent('h2', 'Not Morse');
+        }
+
+        keyupItem('textarea#morse', function(e){
+            if(is_morse(e.value)){
+                changeContent('#plain', morse_decode(e.value));
+                changeContent('h2', 'Morse'+' ('+morse_decode(e.value)+')');
+
+            } else {
+                changeContent('h2', 'Not Morse');
+            }
+        });
+
+    </script>
+
+    <script>
+
+        let data = '-- ..- ... - .- ..-. .- / -.- . -- .- .-.. / .- - .- - ..-- .-. -.-';
+       
+        if(is_morse(data)){
+            console.log('Bu bir mors kodudur.'+' ( '+morse_decode(data)+' )');
+        } else {
+            console.log('Bu bir mors kodu değildir.');
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>morse_decode</title>
+    <link rel="shortcut icon" href="#">
+    <script src="../src/mind.js"></script>
+</head>
+<body>
+
+    <form>
+        <label for="plain">Plain Text</label><br>
+        <textarea id="plain" cols="30" rows="10"></textarea><br><br>
+        <label for="morse">Morse Code</label><br>
+        <textarea id="morse" cols="30" rows="10">-- ..- ... - .- ..-. .- / -.- . -- .- .-.. / .- - .- - ..-- .-. -.-</textarea><br>
+    </form>
+
+    <script>
+        changeContent('#plain', morse_decode(getContent('textarea#morse')));
+
+        keyupItem('textarea#plain', function(e){
+            changeContent('#morse', morse_encode(e.value));
+        });
+        keyupItem('textarea#morse', function(e){
+            changeContent('#plain', morse_decode(e.value));
+        });
+
+    </script>
+</body>
+</html>

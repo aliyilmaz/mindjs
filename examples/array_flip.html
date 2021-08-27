@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>array_flip</title>
+    <link rel="shortcut icon" href="#">
+    <script src="../src/mind.js"></script>
+</head>
+<body>
+    <div id="example">
+
+    </div>
+
+    <script>
+
+        /* -------------------------------------------------------------------------- */
+        /*                                    JSON OBJECT                             */
+        /* -------------------------------------------------------------------------- */
+        let jsonObject = {"firstName":"John", "lastName":"Doe"};
+        appendItem('div#example',JSON.stringify(jsonObject)+' - '+JSON.stringify(array_flip(jsonObject)));
+        appendItem('div#example', '<br><br>');
+
+        /* -------------------------------------------------------------------------- */
+        /*                                    JSON ARRAY                              */
+        /* -------------------------------------------------------------------------- */
+        let jsonArray = {
+            "name":"John",
+            "age":30,
+            "cars":[ "Ford", "BMW", "Fiat" ]
+            };
+        appendItem('div#example',JSON.stringify(jsonArray['cars'])+' - '+JSON.stringify(array_flip(jsonArray['cars'])));
+        appendItem('div#example', '<br><br>');
+
+    </script>
+</body>
+</html>

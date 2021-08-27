@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>strstr</title>
+    <link rel="shortcut icon" href="#">
+    <script src="../src/mind.js"></script>
+</head>
+<body>
+
+    <form>
+        <h2>merhaba dünya</h2>
+        <br>
+        <label for="plain">Plain Text</label><br>
+        <textarea id="plain" cols="30" rows="10"></textarea><br><br>
+    </form>
+
+    <script>
+        let data = 'merhaba dünya';
+        keyupItem('textarea#plain', function(e){
+            if(strstr(data, e.value)){
+                changeContent('#example', 'Found.');
+            } else {
+                changeContent('#example', 'Not found.');
+            }
+        });
+    </script>
+    <div id="example">
+
+    </div>
+</body>
+</html>
