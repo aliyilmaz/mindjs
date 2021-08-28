@@ -169,7 +169,11 @@ function morse_encode(str) {
     let morseDictionary = morsealphabet();
     let output = '';
     for (let index = 0; index < str.length; index++) {
-        output += morseDictionary[str[index]]+' ';
+        if (isset(morseDictionary[str[index]])) {
+            output += morseDictionary[str[index]]+' ';
+        } else {
+            output += '# ';
+        }
     }
     return output.trim();
 }
@@ -178,7 +182,7 @@ function morse_decode(morse) {
     let output = '';
 
     if (morse === ' ') {
-        return '#';
+        return '/';
     }
     let morseDictionary = array_flip(morsealphabet());
     morse = morse.split(' ');
