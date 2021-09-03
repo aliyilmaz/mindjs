@@ -1,7 +1,7 @@
 /**
  *
  * @package    mind.js
- * @version    Release: 1.2.8
+ * @version    Release: 1.2.9
  * @license    GPL3
  * @author     Ali YILMAZ <aliyilmaz.work@gmail.com>
  * @category   Javascript Framework, Basic web development kit.
@@ -133,7 +133,7 @@ function inverse(data) {
     }
 
     if (is_object(data)) {
-        new_obj= {}
+        new_obj = {};
         rev_obj = Object.keys(data).reverse();
         rev_obj.forEach(function(i) { 
             new_obj[i] = data[i];
@@ -158,15 +158,22 @@ function array_flip( trans ){
     return tmp_ar;
 }
 
-function morsealphabet() {
+function morsealphabet(morseDictionary = []) {
+    if (morseDictionary.length !== 0) {
+        return morseDictionary;
+    }
     return {
         'a': '.-', 'b': '-...', 'c': '-.-.', 'ç': '-.-..', 'd': '-..', 'e': '.', 'f': '..-.', 'g': '--.', 'ğ': '--.-.', 'h': '....', 'ı': '..', 'i': '.-..-', 'j': '.---', 'k': '-.-', 'l': '.-..', 'm': '--', 'n': '-.', 'o': '---', 'ö': '---.', 'p': '.--.', 'q': '--.-', 'r': '.-.', 's': '...', 'ş': '.--..', 't': '-', 'u': '..-', 'ü': '..--', 'v': '...-', 'w': '.--', 'x': '-..-', 'y': '-.--', 'z': '--..', '0': '-----', '1': '.----', '2': '..---', '3': '...--', '4': '....-', '5': '.....', '6': '-....', '7': '--...', '8': '---..', '9': '----.', '.': '.-.-.-', ',': '--..--', '?': '..--..', '\'': '.----.', '!': '-.-.--', '/': '-..-.', '(': '-.--.', ')': '-.--.-', '&': '.-...', ':': '---...', ';': '-.-.-.', '=': '-...-', '+': '.-.-.', '-': '-....-', '_': '..--.-', '"': '.-..-.', '$': '...-..-', '@': '.--.-.', '¿': '..-.-', '¡': '--...-', ' ': '/',
     };
 }
 
-function morse_encode(str) {
+function morse_encode(str, morseDictionary = []) {
     str = str.toLowerCase();
-    let morseDictionary = morsealphabet();
+    if (morseDictionary.length !== 0) {
+        morseDictionary = morsealphabet(morseDictionary);
+    } else {
+        morseDictionary = morsealphabet();
+    }
     let output = '';
     for (let index = 0; index < str.length; index++) {
         if (isset(morseDictionary[str[index]])) {
@@ -178,13 +185,18 @@ function morse_encode(str) {
     return output.trim();
 }
 
-function morse_decode(morse) {
+function morse_decode(morse, morseDictionary = []) {
     let output = '';
 
     if (morse === ' ') {
         return '/';
     }
-    let morseDictionary = array_flip(morsealphabet());
+    if (morseDictionary.length !== 0) {
+        morseDictionary = morsealphabet(morseDictionary);
+    } else {
+        morseDictionary = morsealphabet();
+    }
+    morseDictionary = array_flip(morseDictionary);
     morse = morse.split(' ');
 
     for (let index = 0; index < morse.length; index++) {
@@ -195,6 +207,55 @@ function morse_decode(morse) {
         }
     }
     return output;
+}
+
+function bin2hex(str, hex) {
+    try{
+        hex = encodeURIComponent(str)
+            .split('').map(function (v) {
+                return v.charCodeAt(0).toString(16)
+            }).join('');
+      }
+      catch(e){
+        hex = '';
+        console.log('invalid text input: ' + str);
+      }
+    return hex;
+}
+
+function hex2bin(hex) {
+    try{
+        str = decodeURIComponent(decodeURIComponent(hex.replace(/(..)/g, '%$1')));
+    } catch(e){
+        str = '';
+        console.log('invalid hex input: ' + hex);
+    }
+    return str;
+}
+
+function siyakat_encode(siyakat, miftah) {
+    if(miftah.length == 0){
+        return '';
+    }
+
+    for (i=0; i < miftah.length; i++) { 
+        siyakat = bin2hex(siyakat); // 1
+        siyakat = morse_encode(siyakat, miftah[i]); // 2        
+    }
+    return siyakat;
+}
+
+function siyakat_decode(siyakat, miftah) {
+    if(miftah.length == 0){
+        return '';
+    }
+
+    miftah = inverse(miftah);
+    for (i=0; i < miftah.length; i++) { 
+        siyakat = morse_decode(siyakat, miftah[i]); // 2        
+        siyakat = hex2bin(siyakat); // 1
+    }
+    return siyakat;
 }
 
 function getContent(element) {

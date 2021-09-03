@@ -13,10 +13,11 @@
         <label for="plain">Plain Text</label><br>
         <textarea id="plain" cols="30" rows="10"></textarea><br><br>
         <label for="morse">Morse Code</label><br>
-        <textarea id="morse" cols="30" rows="10">-- ..- ... - .- ..-. .- / -.- . -- .- .-.. / .- - .- - ..-- .-. -.-</textarea><br>
+        <textarea id="morse" cols="30" rows="10">-- ..- ... - ----- ..-. ----- / -.- . -- ----- .-.. / ----- - ----- - ..-- .-. -.-</textarea><br>
     </form>
 
     <script>
+        /*
         changeContent('#plain', morse_decode(getContent('textarea#morse')));
 
         keyupItem('textarea#plain', function(e){
@@ -24,6 +25,17 @@
         });
         keyupItem('textarea#morse', function(e){
             changeContent('#plain', morse_decode(e.value));
+        });
+        */
+
+        let morseDictionary = {"a":"-----","1":".----","2":"..---","3":"...--","4":"....-","5":".....","6":"-....","7":"--...","8":"---..","9":"----.","0":".-","b":"-...","c":"-.-.","ç":"-.-..","d":"-..","e":".","f":"..-.","g":"--.","ğ":"--.-.","h":"....","ı":"..","i":".-..-","j":".---","k":"-.-","l":".-..","m":"--","n":"-.","o":"---","ö":"---.","p":".--.","q":"--.-","r":".-.","s":"...","ş":".--..","t":"-","u":"..-","ü":"..--","v":"...-","w":".--","x":"-..-","y":"-.--","z":"--..",".":".-.-.-",",":"--..--","?":"..--..","'":".----.","!":"-.-.--","/":"-..-.","(":"-.--.",")":"-.--.-","&":".-...",":":"---...",";":"-.-.-.","=":"-...-","+":".-.-.","-":"-....-","_":"..--.-","\"":".-..-.","$":"...-..-","@":".--.-.","¿":"..-.-","¡":"--...-"," ":"/"};
+        changeContent('#plain', morse_decode(getContent('textarea#morse'), morseDictionary));
+
+        keyupItem('textarea#plain', function(e){
+            changeContent('#morse', morse_encode(e.value, morseDictionary));
+        });
+        keyupItem('textarea#morse', function(e){
+            changeContent('#plain', morse_decode(e.value, morseDictionary));
         });
 
     </script>
